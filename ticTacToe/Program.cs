@@ -15,7 +15,7 @@ namespace ticTacToe
 
             createPlayers();
             Console.WriteLine(" ");
-            Console.WriteLine("Score {0} - {1}   {2} - {3}", player1, score1, player2, score2);
+            displayScore();
             displayBoard();
             Console.WriteLine(" ");
 
@@ -42,7 +42,6 @@ namespace ticTacToe
                     displayBoard();
                 } else
                 {
-              
 
                     placeGamePiece("please choose a number between 1-9", choice, piece);
                 }
