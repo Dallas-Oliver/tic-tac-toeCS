@@ -7,10 +7,8 @@ namespace ticTacToe
     {
 
         static string[] boardSpots = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-        static string player1, player2, score1 = "0", score2 = "0";
-       
-
-        
+        static string player1, player2;
+        static int score1 = 0, score2 = 0;
 
         static void Main(string[] args)
         {
@@ -20,11 +18,8 @@ namespace ticTacToe
             Console.WriteLine("Score {0} - {1}   {2} - {3}", player1, score1, player2, score2);
             displayBoard();
             Console.WriteLine(" ");
-            
-           
-            playGame();
-            
 
+            playGame();
 
             Console.ReadLine();
         }
@@ -37,10 +32,11 @@ namespace ticTacToe
 
             if(boardSpots[choice] == "x" || boardSpots[choice] == "o")
             {
-                Console.WriteLine("please choose a different spot");
-                choice = int.Parse(Console.ReadLine());
-                boardSpots[choice] = piece;
-                displayBoard();
+                // Console.WriteLine("please choose a different spot");
+                //choice = int.Parse(Console.ReadLine());
+                //boardSpots[choice] = piece;
+                //displayBoard();
+                placeGamePiece("please choose a different spot", choice, piece);
             } else
             {
                 if(boardSpots.Contains(choice.ToString()))
@@ -49,14 +45,24 @@ namespace ticTacToe
                     displayBoard();
                 } else
                 {
-                    Console.WriteLine("please choose a number between 1-9");
-                    choice = int.Parse(Console.ReadLine());
-                    boardSpots[choice] = piece;
-                    displayBoard();
+                    // Console.WriteLine("please choose a number between 1-9");
+                    // choice = int.Parse(Console.ReadLine());
+                    //  boardSpots[choice] = piece;
+                    // displayBoard();
+
+                    placeGamePiece("please choose a number between 1-9", choice, piece);
                 }
                 
             }
 
+        }
+
+        static void placeGamePiece(string consoleLine, int choice, string piece)
+        {
+            Console.WriteLine(consoleLine);
+            choice = int.Parse(Console.ReadLine());
+            boardSpots[choice] = piece;
+            displayBoard();
         }
 
         static void playGame()
@@ -68,6 +74,10 @@ namespace ticTacToe
                 {
                     takeTurn(player1, "x");
                     player1Turn = false;
+                    if (boardIsFull())
+                    {
+
+                    }
                 }
                 else
                 {
@@ -99,26 +109,35 @@ namespace ticTacToe
         {
             if(checkForLine())
             {
-                Console.WriteLine("Game Over. would you like to play again? y/n");
-                string choice = Console.ReadLine();
-                
-                if(choice == "y")
-                {
-                    resetBoard();
-                    displayBoard();
-                    playGame();
-                    
-                } else if(choice == "n")
-                {
-                    Console.WriteLine("Thanks for playing!");
-                    
-                }
+
+                playAgain();
 
                 return true;
                 
             } else
             {
                 return false;
+            }
+        }
+
+        static void playAgain()
+        {
+            Console.WriteLine("Game Over. would you like to play again? y/n");
+            string choice = Console.ReadLine();
+
+            if (choice == "y")
+            {
+                Console.Clear();
+                displayScore();
+                resetBoard();
+                displayBoard();
+                playGame();
+
+            }
+            else if (choice == "n")
+            {
+                Console.WriteLine("Thanks for playing!");
+
             }
         }
 
@@ -135,12 +154,16 @@ namespace ticTacToe
              //vertical
              isLine(1, 4, 7, "x") ||
              isLine(2, 5, 8, "x") ||
-             isLine(3, 6, 9, "x") ||
+             isLine(3, 6, 9, "x"))
+            {
+                score1++;
+                return true;
+            }
 
             
              //check if "o" player has won
              //horizontal
-             isLine(1, 2, 3, "o") ||          
+            if( isLine(1, 2, 3, "o") ||          
              isLine(4, 5, 6, "o") ||          
              isLine(7, 8, 9, "o") ||  
              //diagonal
@@ -151,7 +174,7 @@ namespace ticTacToe
              isLine(2, 5, 8, "o") ||
              isLine(3, 6, 9, "o"))
             {
-               
+                score2++;
                 return true;
                 
             }
@@ -174,6 +197,17 @@ namespace ticTacToe
             }
 
             
+        }
+
+        static bool boardIsFull()
+        {
+           return boardSpots.All(item => item.Equals('x') || item.Equals('o')); 
+                       
+        }
+
+        static void displayScore()
+        {
+            Console.WriteLine("Score {0} - {1}   {2} - {3}", player1, score1, player2, score2);
         }
 
 
