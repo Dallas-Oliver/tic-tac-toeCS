@@ -32,10 +32,7 @@ namespace ticTacToe
 
             if(boardSpots[choice] == "x" || boardSpots[choice] == "o")
             {
-                // Console.WriteLine("please choose a different spot");
-                //choice = int.Parse(Console.ReadLine());
-                //boardSpots[choice] = piece;
-                //displayBoard();
+           
                 placeGamePiece("please choose a different spot", choice, piece);
             } else
             {
@@ -45,10 +42,7 @@ namespace ticTacToe
                     displayBoard();
                 } else
                 {
-                    // Console.WriteLine("please choose a number between 1-9");
-                    // choice = int.Parse(Console.ReadLine());
-                    //  boardSpots[choice] = piece;
-                    // displayBoard();
+              
 
                     placeGamePiece("please choose a number between 1-9", choice, piece);
                 }
